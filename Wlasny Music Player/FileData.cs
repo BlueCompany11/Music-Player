@@ -24,5 +24,6 @@ namespace Wlasny_Music_Player
         {
             return this.file;
         }
+        //public void ChangeItemPosition(List<FileData> list,int first, int second)
     }
 }

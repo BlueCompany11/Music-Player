@@ -79,7 +79,7 @@
             this.listBoxMusic.TabIndex = 1;
             this.listBoxMusic.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxMusic_DragDrop);
             this.listBoxMusic.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxMusic_DragOver);
-            this.listBoxMusic.DoubleClick += new System.EventHandler(this.listBoxMusic_DoubleClick);
+            this.listBoxMusic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxMusic_MouseDoubleClick);
             this.listBoxMusic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxMusic_MouseDown);
             // 
             // tableLayoutPanel2
@@ -129,6 +129,7 @@
             this.buttonClearList.TabIndex = 1;
             this.buttonClearList.Text = "Wyczyść listę";
             this.buttonClearList.UseVisualStyleBackColor = true;
+            this.buttonClearList.Click += new System.EventHandler(this.buttonClearList_Click);
             // 
             // buttonSearchForFiles
             // 
