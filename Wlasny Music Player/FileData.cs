@@ -41,16 +41,14 @@ namespace Wlasny_Music_Player
         /// <param name="list"></param>
         /// <param name="indexToInsert"></param>
         /// <param name="indexToRemove"></param>
-        public static void ChangeItemPosition(List<FileData> list,int indexToInsert, int indexToRemove)//i j
+        public static void ChangeItemPosition(List<FileData> list,int indexToInsert, int indexToRemove)//przetestowana
         {
-            list.Insert(indexToInsert, list[indexToRemove]);
-            if (indexToInsert <= indexToRemove)
+            var temp = list[indexToRemove];
+            list.RemoveAt(indexToRemove);
+            list.Insert(indexToInsert, temp);
+            foreach (var item in list)
             {
-                list.RemoveAt(indexToRemove + 1);
-            }
-            else
-            {
-                list.RemoveAt(indexToRemove);
+                Console.WriteLine(item.file);
             }
         }
     }

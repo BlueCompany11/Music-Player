@@ -21,7 +21,22 @@ namespace Wlasny_Music_Player
 
         private void UpdatePlayList()
         {
-
+            //paths2 zawiera wszystkie sciezki z listy, na jej podstawie robie playliste
+            string[] allPaths = FileData.AllPaths();
+            Console.WriteLine("Sciezki");
+            foreach (var item in allPaths)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("Koniec sciezki");
+            var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
+            foreach (string path in allPaths)
+            {
+                var mediaItem = axWindowsMediaPlayer1.newMedia(path);
+                myPlayList.appendItem(mediaItem);
+            }
+            axWindowsMediaPlayer1.currentPlaylist = myPlayList;
+            int x = axWindowsMediaPlayer1.currentPlaylist.count;
         }
 
         private void buttonSearchForFiles_Click(object sender, EventArgs e)
@@ -37,18 +52,7 @@ namespace Wlasny_Music_Player
                     listBoxMusic.Items.Add(files[i]);
                 }
             }
-            //funkcja do tworzenia playlisty
-            //trzeba ja uaktualniac w odpowienidch miejscach
-            //paths2 zawiera wszystkie sciezki z listy, na jej podstawie robie playliste
-            string[] paths2 = FileData.AllPaths();
-            var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
-            foreach (string path in paths2)
-            {
-                var mediaItem = axWindowsMediaPlayer1.newMedia(path);
-                myPlayList.appendItem(mediaItem);
-            }
-            axWindowsMediaPlayer1.currentPlaylist = myPlayList;
-            int x=axWindowsMediaPlayer1.currentPlaylist.count;
+            UpdatePlayList();
         }
 
         /// <summary>
@@ -58,7 +62,6 @@ namespace Wlasny_Music_Player
         /// <param name="e"></param>
         private void listBoxMusic_MouseDown(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("MouseDown");
             indexOfItemListLastClicked = listBoxMusic.SelectedIndex;
             Console.WriteLine(indexOfItemListLastClicked);
             //tutaj trzeba zapisywac ostatni nacisniety przycisk by miec miejsce na liscie ktore zostanie przesuniete
@@ -74,6 +77,7 @@ namespace Wlasny_Music_Player
             {
                 FileData.fileStorage.RemoveAt(listBoxMusic.SelectedIndex);
                 listBoxMusic.Items.Remove(listBoxMusic.SelectedItem);
+                UpdatePlayList();
             }
         }
 
@@ -90,27 +94,17 @@ namespace Wlasny_Music_Player
             this.listBoxMusic.Items.Remove(data);
             //wstawienie w nowe miejsce
             this.listBoxMusic.Items.Insert(index, data);
-            List<string> x = new List<string>();
-            //x.Add(listBoxMusic);
-            foreach (var item in x)
-            {
-                Console.WriteLine(item);
-            }
 
             //kod na poprawna modyfikacje listy
             FileData.ChangeItemPosition(FileData.fileStorage, index, indexOfItemListLastClicked);
-            Console.WriteLine(FileData.fileStorage[index].GetFile());
-            Console.WriteLine(FileData.fileStorage[indexOfItemListLastClicked].GetFile());
+            UpdatePlayList();
+            //Console.WriteLine(FileData.fileStorage[index].GetFile());
+            //Console.WriteLine(FileData.fileStorage[indexOfItemListLastClicked].GetFile());
         }
 
         private void listBoxMusic_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
-        }
-
-        private void buttonClearList_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void listBoxMusic_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -122,6 +116,11 @@ namespace Wlasny_Music_Player
         private void listBoxMusic_MouseClick(object sender, MouseEventArgs e)
         {
             MessageBox.Show("a");
+        }
+
+        private void buttonClearList_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
