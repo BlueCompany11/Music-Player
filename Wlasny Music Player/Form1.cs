@@ -30,6 +30,16 @@ namespace Wlasny_Music_Player
                     listBoxMusic.Items.Add(files[i]);
                 }
             }
+            //funkcja do tworzenia playlisty
+            //trzeba ja uaktualniac w odpowienidch miejscach
+            string[] paths2 = FileData.AllPaths();
+            var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
+            foreach (string path in paths2)
+            {
+                var mediaItem = axWindowsMediaPlayer1.newMedia(path);
+                myPlayList.appendItem(mediaItem);
+            }
+            axWindowsMediaPlayer1.currentPlaylist = myPlayList;
         }
         /// <summary>
         /// Left click raises dragdrop event, right click deletes the clicked position
@@ -38,13 +48,13 @@ namespace Wlasny_Music_Player
         /// <param name="e"></param>
         private void listBoxMusic_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && e.Clicks == 1)
+            if (e.Button == MouseButtons.Left && e.Clicks == 1 && listBoxMusic.SelectedItem != null)
             {
-                    //jak sie wysypie dac try catch
-                    if (this.listBoxMusic.SelectedItems == null) return;
-                    this.listBoxMusic.DoDragDrop(this.listBoxMusic.SelectedItem, DragDropEffects.Move);
+                //jak sie wysypie dac try catch
+                if (this.listBoxMusic.SelectedItems == null) return;
+                this.listBoxMusic.DoDragDrop(this.listBoxMusic.SelectedItem, DragDropEffects.Move);
             }
-            else if (e.Button==MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right)
             {
                 listBoxMusic.Items.Remove(listBoxMusic.SelectedItem);
             }
@@ -75,6 +85,7 @@ namespace Wlasny_Music_Player
             e.Effect = DragDropEffects.Move;
         }
 
+        //do usuniecia
         //to zdarzzenie odpowiada za poprawne wlaczenie muzyki przy double clicku
         //domyslnie jest ustawiany na -1, trzeba mu przypisac inna wartosc
         //private int lastindex = -10;
@@ -91,13 +102,32 @@ namespace Wlasny_Music_Player
 
         private void buttonClearList_Click(object sender, EventArgs e)
         {
-            //axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
-            axWindowsMediaPlayer1.URL = FileData.fileStorage[0].GetPath();
+            //axWindowsMediaPlayer1.CreateControl();
+            //var mediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+            //var myPlayList = mediaPlayer.playlistCollection.newPlaylist("myPlayList");
+            //WMPLib.IWMPMedia media;
+            //string[] paths2 = FileData.AllPaths();
+            //foreach (var fileName in paths2)
+            //{
+            //    media = mediaPlayer.newMedia(fileName);
+            //    myPlayList.appendItem(media);
+            //}
+            //mediaPlayer.currentPlaylist = myPlayList;
+            //mediaPlayer.Ctlcontrols.play();
+            //string[] paths2 = FileData.AllPaths();
+            //var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
+            //foreach (string path in paths2)
+            //{
+            //    var mediaItem = axWindowsMediaPlayer1.newMedia(path);
+            //    myPlayList.appendItem(mediaItem);
+            //}
+            //axWindowsMediaPlayer1.currentPlaylist = myPlayList;
         }
 
         private void listBoxMusic_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
+            if (FileData.fileStorage.Count > 0)
+                axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
         }
     }
 }

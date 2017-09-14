@@ -24,6 +24,17 @@ namespace Wlasny_Music_Player
         {
             return this.file;
         }
+
+        public static string[] AllPaths()
+        {
+            int size = fileStorage.Count;
+            string[] paths = new string[size];
+            for (int i = 0; i < size; i++)
+            {
+                paths[i] = fileStorage[i].path;
+            }
+            return paths;
+        }
         //public void ChangeItemPosition(List<FileData> list,int first, int second)
     }
 }
