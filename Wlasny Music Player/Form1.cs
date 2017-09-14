@@ -32,6 +32,7 @@ namespace Wlasny_Music_Player
             }
             //funkcja do tworzenia playlisty
             //trzeba ja uaktualniac w odpowienidch miejscach
+            //paths2 zawiera wszystkie sciezki z listy, na jej podstawie robie playliste
             string[] paths2 = FileData.AllPaths();
             var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
             foreach (string path in paths2)
@@ -40,6 +41,7 @@ namespace Wlasny_Music_Player
                 myPlayList.appendItem(mediaItem);
             }
             axWindowsMediaPlayer1.currentPlaylist = myPlayList;
+            int x=axWindowsMediaPlayer1.currentPlaylist.count;
         }
         /// <summary>
         /// Left click raises dragdrop event, right click deletes the clicked position
@@ -54,8 +56,10 @@ namespace Wlasny_Music_Player
                 if (this.listBoxMusic.SelectedItems == null) return;
                 this.listBoxMusic.DoDragDrop(this.listBoxMusic.SelectedItem, DragDropEffects.Move);
             }
+            //przetestowane
             else if (e.Button == MouseButtons.Right)
             {
+                FileData.fileStorage.RemoveAt(listBoxMusic.SelectedIndex);
                 listBoxMusic.Items.Remove(listBoxMusic.SelectedItem);
             }
         }
@@ -73,6 +77,13 @@ namespace Wlasny_Music_Player
             this.listBoxMusic.Items.Remove(data);
             //wstawienie w nowe miejsce
             this.listBoxMusic.Items.Insert(index, data);
+            List<string> x = new List<string>();
+            //x.Add(listBoxMusic);
+            foreach (var item in x)
+            {
+                Console.WriteLine(item);
+            }
+            
             //kod na poprawna modyfikacje listy
             //insert i remove at
             //tutaj jest modyfikacja listy z ktorej bedzie czytana scieza do odtworzenia muzyki
@@ -102,26 +113,7 @@ namespace Wlasny_Music_Player
 
         private void buttonClearList_Click(object sender, EventArgs e)
         {
-            //axWindowsMediaPlayer1.CreateControl();
-            //var mediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
-            //var myPlayList = mediaPlayer.playlistCollection.newPlaylist("myPlayList");
-            //WMPLib.IWMPMedia media;
-            //string[] paths2 = FileData.AllPaths();
-            //foreach (var fileName in paths2)
-            //{
-            //    media = mediaPlayer.newMedia(fileName);
-            //    myPlayList.appendItem(media);
-            //}
-            //mediaPlayer.currentPlaylist = myPlayList;
-            //mediaPlayer.Ctlcontrols.play();
-            //string[] paths2 = FileData.AllPaths();
-            //var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
-            //foreach (string path in paths2)
-            //{
-            //    var mediaItem = axWindowsMediaPlayer1.newMedia(path);
-            //    myPlayList.appendItem(mediaItem);
-            //}
-            //axWindowsMediaPlayer1.currentPlaylist = myPlayList;
+
         }
 
         private void listBoxMusic_MouseDoubleClick(object sender, MouseEventArgs e)
