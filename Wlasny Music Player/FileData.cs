@@ -35,6 +35,23 @@ namespace Wlasny_Music_Player
             }
             return paths;
         }
-        //public void ChangeItemPosition(List<FileData> list,int first, int second)
+        /// <summary>
+        /// Those indexes are correct for list before changes.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="indexToInsert"></param>
+        /// <param name="indexToRemove"></param>
+        public static void ChangeItemPosition(List<FileData> list,int indexToInsert, int indexToRemove)//i j
+        {
+            list.Insert(indexToInsert, list[indexToRemove]);
+            if (indexToInsert <= indexToRemove)
+            {
+                list.RemoveAt(indexToRemove + 1);
+            }
+            else
+            {
+                list.RemoveAt(indexToRemove);
+            }
+        }
     }
 }

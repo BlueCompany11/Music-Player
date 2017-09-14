@@ -77,6 +77,7 @@
             this.listBoxMusic.Name = "listBoxMusic";
             this.listBoxMusic.Size = new System.Drawing.Size(601, 189);
             this.listBoxMusic.TabIndex = 1;
+            this.listBoxMusic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxMusic_MouseClick);
             this.listBoxMusic.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxMusic_DragDrop);
             this.listBoxMusic.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxMusic_DragOver);
             this.listBoxMusic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxMusic_MouseDoubleClick);

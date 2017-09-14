@@ -12,9 +12,16 @@ namespace Wlasny_Music_Player
 {
     public partial class Form1 : Form
     {
+        int indexOfItemListLastClicked = -1;
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void UpdatePlayList()
+        {
+
         }
 
         private void buttonSearchForFiles_Click(object sender, EventArgs e)
@@ -43,6 +50,7 @@ namespace Wlasny_Music_Player
             axWindowsMediaPlayer1.currentPlaylist = myPlayList;
             int x=axWindowsMediaPlayer1.currentPlaylist.count;
         }
+
         /// <summary>
         /// Left click raises dragdrop event, right click deletes the clicked position
         /// </summary>
@@ -50,6 +58,11 @@ namespace Wlasny_Music_Player
         /// <param name="e"></param>
         private void listBoxMusic_MouseDown(object sender, MouseEventArgs e)
         {
+            Console.WriteLine("MouseDown");
+            indexOfItemListLastClicked = listBoxMusic.SelectedIndex;
+            Console.WriteLine(indexOfItemListLastClicked);
+            //tutaj trzeba zapisywac ostatni nacisniety przycisk by miec miejsce na liscie ktore zostanie przesuniete
+            //na index z dragdrop
             if (e.Button == MouseButtons.Left && e.Clicks == 1 && listBoxMusic.SelectedItem != null)
             {
                 //jak sie wysypie dac try catch
@@ -83,33 +96,17 @@ namespace Wlasny_Music_Player
             {
                 Console.WriteLine(item);
             }
-            
+
             //kod na poprawna modyfikacje listy
-            //insert i remove at
-            //tutaj jest modyfikacja listy z ktorej bedzie czytana scieza do odtworzenia muzyki
-            //string oldpath=
-            //FileData.fileStorage.Insert( index, new FileData((string)data, ""));
+            FileData.ChangeItemPosition(FileData.fileStorage, index, indexOfItemListLastClicked);
+            Console.WriteLine(FileData.fileStorage[index].GetFile());
+            Console.WriteLine(FileData.fileStorage[indexOfItemListLastClicked].GetFile());
         }
 
         private void listBoxMusic_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
-
-        //do usuniecia
-        //to zdarzzenie odpowiada za poprawne wlaczenie muzyki przy double clicku
-        //domyslnie jest ustawiany na -1, trzeba mu przypisac inna wartosc
-        //private int lastindex = -10;
-        //private void listBoxMusic_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (lastindex != listBoxMusic.SelectedIndex)
-        //    {
-        //        //axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
-        //        axWindowsMediaPlayer1.URL = FileData.fileStorage[0].GetPath();
-        //        lastindex = listBoxMusic.SelectedIndex;
-        //    }
-        //    MessageBox.Show(listBoxMusic.SelectedIndex.ToString());
-        //}
 
         private void buttonClearList_Click(object sender, EventArgs e)
         {
@@ -120,6 +117,11 @@ namespace Wlasny_Music_Player
         {
             if (FileData.fileStorage.Count > 0)
                 axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
+        }
+
+        private void listBoxMusic_MouseClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("a");
         }
     }
 }
