@@ -18,11 +18,24 @@ namespace Wlasny_Music_Player
         {
             InitializeComponent();
         }
-
-        private void UpdatePlayList()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startPosition"></param>
+        private void UpdatePlayList(int startPosition=0)
         {
             //paths2 zawiera wszystkie sciezki z listy, na jej podstawie robie playliste
             string[] allPaths = FileData.AllPaths();
+            List<string> alternativeAllPaths = new List<string>();
+            if (startPosition != 0)
+            {
+                for (int i = startPosition; i < allPaths.Length; i++)
+                {
+                    alternativeAllPaths.Add(allPaths[i]);
+                }
+                allPaths = alternativeAllPaths.ToArray();
+            }
+            
             Console.WriteLine("Sciezki");
             foreach (var item in allPaths)
             {
@@ -36,7 +49,7 @@ namespace Wlasny_Music_Player
                 myPlayList.appendItem(mediaItem);
             }
             axWindowsMediaPlayer1.currentPlaylist = myPlayList;
-            int x = axWindowsMediaPlayer1.currentPlaylist.count;
+            
         }
 
         private void buttonSearchForFiles_Click(object sender, EventArgs e)
@@ -109,8 +122,9 @@ namespace Wlasny_Music_Player
 
         private void listBoxMusic_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (FileData.fileStorage.Count > 0)
-                axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
+            UpdatePlayList(listBoxMusic.SelectedIndex);
+            //if (FileData.fileStorage.Count > 0)
+            //    axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
         }
 
         private void listBoxMusic_MouseClick(object sender, MouseEventArgs e)
@@ -120,7 +134,23 @@ namespace Wlasny_Music_Player
 
         private void buttonClearList_Click(object sender, EventArgs e)
         {
+            var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
+            axWindowsMediaPlayer1.currentPlaylist = myPlayList;
+            listBoxMusic.Items.Clear();
+        }
 
+        private void axWindowsMediaPlayer1_PlaylistChange(object sender, AxWMPLib._WMPOCXEvents_PlaylistChangeEvent e)
+        {
+            Console.WriteLine("Doszlo do zmiany playlisty");
+            
+        }
+
+        private void axWindowsMediaPlayer1_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            //Console.WriteLine("Play state changed");
+            //indexCurrentlyPlaying = listBoxMusic.SelectedIndex;
+            //Console.WriteLine(indexCurrentlyPlaying);
+            //axWindowsMediaPlayer1.currentMedia
         }
     }
 }
