@@ -126,16 +126,23 @@ namespace Wlasny_Music_Player
             //    axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
         }
 
-        private void listBoxMusic_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void buttonClearList_Click(object sender, EventArgs e)
         {
             var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
             axWindowsMediaPlayer1.currentPlaylist = myPlayList;
             listBoxMusic.Items.Clear();
+        }
+
+        private void buttonSaveList_Click(object sender, EventArgs e)
+        {
+            SaveForm form = new SaveForm();
+            form.Show();
+
+        }
+
+        private void buttonLoadList_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

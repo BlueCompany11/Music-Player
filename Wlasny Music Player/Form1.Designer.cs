@@ -33,7 +33,6 @@
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             this.listBoxMusic = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonLoadList = new System.Windows.Forms.Button();
             this.buttonSaveList = new System.Windows.Forms.Button();
             this.buttonClearList = new System.Windows.Forms.Button();
             this.buttonSearchForFiles = new System.Windows.Forms.Button();
@@ -77,7 +76,6 @@
             this.listBoxMusic.Name = "listBoxMusic";
             this.listBoxMusic.Size = new System.Drawing.Size(601, 189);
             this.listBoxMusic.TabIndex = 1;
-            this.listBoxMusic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxMusic_MouseClick);
             this.listBoxMusic.DragDrop += new System.Windows.Forms.DragEventHandler(this.listBoxMusic_DragDrop);
             this.listBoxMusic.DragOver += new System.Windows.Forms.DragEventHandler(this.listBoxMusic_DragOver);
             this.listBoxMusic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxMusic_MouseDoubleClick);
@@ -85,12 +83,10 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Controls.Add(this.buttonLoadList, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonSaveList, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonClearList, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.buttonSearchForFiles, 0, 0);
@@ -101,32 +97,23 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(601, 46);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // buttonLoadList
-            // 
-            this.buttonLoadList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonLoadList.Location = new System.Drawing.Point(453, 3);
-            this.buttonLoadList.Name = "buttonLoadList";
-            this.buttonLoadList.Size = new System.Drawing.Size(145, 40);
-            this.buttonLoadList.TabIndex = 3;
-            this.buttonLoadList.Text = "Wczytaj listę";
-            this.buttonLoadList.UseVisualStyleBackColor = true;
-            // 
             // buttonSaveList
             // 
             this.buttonSaveList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSaveList.Location = new System.Drawing.Point(303, 3);
+            this.buttonSaveList.Location = new System.Drawing.Point(403, 3);
             this.buttonSaveList.Name = "buttonSaveList";
-            this.buttonSaveList.Size = new System.Drawing.Size(144, 40);
+            this.buttonSaveList.Size = new System.Drawing.Size(195, 40);
             this.buttonSaveList.TabIndex = 2;
             this.buttonSaveList.Text = "Zapisz listę";
             this.buttonSaveList.UseVisualStyleBackColor = true;
+            this.buttonSaveList.Click += new System.EventHandler(this.buttonSaveList_Click);
             // 
             // buttonClearList
             // 
             this.buttonClearList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonClearList.Location = new System.Drawing.Point(153, 3);
+            this.buttonClearList.Location = new System.Drawing.Point(203, 3);
             this.buttonClearList.Name = "buttonClearList";
-            this.buttonClearList.Size = new System.Drawing.Size(144, 40);
+            this.buttonClearList.Size = new System.Drawing.Size(194, 40);
             this.buttonClearList.TabIndex = 1;
             this.buttonClearList.Text = "Wyczyść listę";
             this.buttonClearList.UseVisualStyleBackColor = true;
@@ -137,7 +124,7 @@
             this.buttonSearchForFiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonSearchForFiles.Location = new System.Drawing.Point(3, 3);
             this.buttonSearchForFiles.Name = "buttonSearchForFiles";
-            this.buttonSearchForFiles.Size = new System.Drawing.Size(144, 40);
+            this.buttonSearchForFiles.Size = new System.Drawing.Size(194, 40);
             this.buttonSearchForFiles.TabIndex = 0;
             this.buttonSearchForFiles.Text = "Wyszukaj pliki";
             this.buttonSearchForFiles.UseVisualStyleBackColor = true;
@@ -145,7 +132,7 @@
             // 
             // openFileDialogMusic
             // 
-            this.openFileDialogMusic.Filter = "MP3 Files|*.mp3";
+            this.openFileDialogMusic.Filter = "MP3 Files|*.mp3|WAV Files|*.wav|WMV Files|*.wmv";
             this.openFileDialogMusic.Multiselect = true;
             // 
             // Form1
@@ -170,7 +157,6 @@
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
         private System.Windows.Forms.ListBox listBoxMusic;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Button buttonLoadList;
         private System.Windows.Forms.Button buttonSaveList;
         private System.Windows.Forms.Button buttonClearList;
         private System.Windows.Forms.Button buttonSearchForFiles;
