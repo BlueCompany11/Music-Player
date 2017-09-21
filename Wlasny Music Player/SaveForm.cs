@@ -107,27 +107,50 @@ namespace Wlasny_Music_Player
 
         private void GetNamesFromFiles()
         {
+            savedPlaylistsListBox.Items.Clear();
             DirectoryInfo directory = new DirectoryInfo(MusicPlayLists.pathToFolder);
             FileInfo[] Files = directory.GetFiles("*.xml");
             for (int i = 0; i < Files.Length; i++)
             {
                 savedPlaylistsListBox.Items.Add(Files[i]);
             }
-            
         }
-
+        /// <summary>
+        /// Load the playlist from the xml
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void savedPlaylistsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            int index = savedPlaylistsListBox.SelectedIndex;
-            string path = MusicPlayLists.pathToFolder;
-            //path += $@"/{savedPlaylistsListBox.SelectedItem.ToString()}";
-            string[] xmlList = Directory.GetFiles(path,"*.xml");
+            try
+            {
+                int index = savedPlaylistsListBox.SelectedIndex;
+                string fileName = savedPlaylistsListBox.SelectedItem.ToString();
+                string path = MusicPlayLists.pathToFolder;
+                string[] xmlList = Directory.GetFiles(path, "*.xml");
 
+                //pobieranie odpowiedniej sciezki majac do dyspozycji tylko nazwe pliku
+                foreach (var item in xmlList)
+                {
+                    if (item.Contains(fileName))
+                    {
+                        fileName = item;
+                        break;
+                    }
+                }
+                File.Delete(fileName);
+                GetNamesFromFiles();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            //aktualizacja listy w finally
         }
     }
 }
