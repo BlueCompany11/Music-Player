@@ -5,15 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
+using System.Xml;
 
 namespace Wlasny_Music_Player
 {
-    public class SaveForm:Form
+    public class SaveForm : Form
     {
         private TextBox saveNameTxtBox;
         private ListBox savedPlaylistsListBox;
         private Button saveButton;
         private Button deleteButton;
+        private Button loadButton;
         private Label label1;
 
         public SaveForm()
@@ -29,6 +32,7 @@ namespace Wlasny_Music_Player
             this.saveButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.loadButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // saveNameTxtBox
@@ -76,9 +80,20 @@ namespace Wlasny_Music_Player
             this.label1.TabIndex = 4;
             this.label1.Text = "Nazwa";
             // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(279, 75);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(75, 23);
+            this.loadButton.TabIndex = 5;
+            this.loadButton.Text = "Wczytaj";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
             // SaveForm
             // 
             this.ClientSize = new System.Drawing.Size(365, 306);
+            this.Controls.Add(this.loadButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.saveButton);
@@ -115,14 +130,11 @@ namespace Wlasny_Music_Player
                 savedPlaylistsListBox.Items.Add(Files[i]);
             }
         }
-        /// <summary>
-        /// Load the playlist from the xml
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        //do usuniecia
         private void savedPlaylistsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            
+
+
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
@@ -144,13 +156,40 @@ namespace Wlasny_Music_Player
                     }
                 }
                 File.Delete(fileName);
-                GetNamesFromFiles();
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            //aktualizacja listy w finally
+            finally
+            {
+                GetNamesFromFiles();
+            }
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string path = MusicPlayLists.pathToFolder;
+                path += "//" + savedPlaylistsListBox.SelectedItem.ToString();
+                var xml = XDocument.Load(path).Root.Element("path");
+                string loadedLines = (string)xml;
+                string[] forListPaths = loadedLines.Split('\n');
+                var xml2 = XDocument.Load(path).Root.Element("fileName");
+                loadedLines = (string)xml2;
+                string[] forListNames = loadedLines.Split('\n');
+                FileData.fileStorage.Clear();
+                for (int i = 0, finish = forListPaths.Length-1; i < finish; i++)
+                {
+                    FileData.fileStorage.Add(new FileData(forListNames[i], forListPaths[i]));
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

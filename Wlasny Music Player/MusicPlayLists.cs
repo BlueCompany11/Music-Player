@@ -40,9 +40,9 @@ namespace Wlasny_Music_Player
             for (int i = 0; i < size; i++)
             {
                 pathsToSave[i] = FileData.fileStorage[i].GetPath();
-                pathsToSave[i] += "!";
+                pathsToSave[i] += '\n';
                 fileName[i] = FileData.fileStorage[i].GetFile();
-                fileName[i] += "!";
+                fileName[i] += '\n';
             }
             XDocument xDoc = new XDocument(
                 new XElement("File",

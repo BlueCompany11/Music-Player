@@ -10,7 +10,7 @@ namespace Wlasny_Music_Player
     {
         public static List<FileData> fileStorage=new List<FileData>();
         string file, path;
-        //jesli bede dodawal do xmla to dodac bezparametrowy konstruktor
+
         public FileData(string file, string path)
         {
             this.file = file;

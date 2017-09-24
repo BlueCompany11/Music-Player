@@ -42,7 +42,7 @@ namespace Wlasny_Music_Player
                 }
                 axWindowsMediaPlayer1.currentPlaylist = myPlayList;
             }
-            catch (System.IndexOutOfRangeException)
+            catch (Exception)
             {
                 return;
             }
