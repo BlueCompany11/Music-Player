@@ -104,7 +104,7 @@
             this.buttonSaveList.Name = "buttonSaveList";
             this.buttonSaveList.Size = new System.Drawing.Size(195, 40);
             this.buttonSaveList.TabIndex = 2;
-            this.buttonSaveList.Text = "Zapisz listę";
+            this.buttonSaveList.Text = "Zapisz/Wczytaj playlistę";
             this.buttonSaveList.UseVisualStyleBackColor = true;
             this.buttonSaveList.Click += new System.EventHandler(this.buttonSaveList_Click);
             // 

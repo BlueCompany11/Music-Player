@@ -19,8 +19,11 @@ namespace Wlasny_Music_Player
         private Button loadButton;
         private Label label1;
 
-        public SaveForm()
+        private Form1 mainForm = null;
+
+        public SaveForm(Form callingForm)
         {
+            mainForm = callingForm as Form1;
             InitializeComponent();
             GetNamesFromFiles();
         }
@@ -49,7 +52,6 @@ namespace Wlasny_Music_Player
             this.savedPlaylistsListBox.Name = "savedPlaylistsListBox";
             this.savedPlaylistsListBox.Size = new System.Drawing.Size(260, 212);
             this.savedPlaylistsListBox.TabIndex = 1;
-            this.savedPlaylistsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.savedPlaylistsListBox_MouseDoubleClick);
             // 
             // saveButton
             // 
@@ -130,12 +132,6 @@ namespace Wlasny_Music_Player
                 savedPlaylistsListBox.Items.Add(Files[i]);
             }
         }
-        //do usuniecia
-        private void savedPlaylistsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-
-        }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
@@ -185,6 +181,12 @@ namespace Wlasny_Music_Player
                 {
                     FileData.fileStorage.Add(new FileData(forListNames[i], forListPaths[i]));
                 }
+                mainForm.listBoxProperty.Items.Clear();
+                foreach (var item in forListNames)
+                {
+                    mainForm.listBoxProperty.Items.Add(item);
+                }
+                mainForm.UpdatePlayList();
             }
             catch(Exception ex)
             {

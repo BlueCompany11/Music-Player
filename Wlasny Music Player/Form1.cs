@@ -7,19 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace Wlasny_Music_Player
 {
     public partial class Form1 : Form
-    {
+    { 
         int indexOfItemListLastClicked = -1;
+
+        public ListBox listBoxProperty { get { return listBoxMusic; } set { listBoxMusic = value; } }
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void UpdatePlayList(int startPosition=0)
+        public void UpdatePlayList(int startPosition=0)
         {
             try
             {
@@ -78,11 +81,9 @@ namespace Wlasny_Music_Player
                 //na index z dragdrop
                 if (e.Button == MouseButtons.Left && e.Clicks == 1 && listBoxMusic.SelectedItem != null)
                 {
-                    //jak sie wysypie dac try catch
                     if (this.listBoxMusic.SelectedItems == null) return;
                     this.listBoxMusic.DoDragDrop(this.listBoxMusic.SelectedItem, DragDropEffects.Move);
                 }
-                //przetestowane
                 else if (e.Button == MouseButtons.Right)
                 {
                     FileData.fileStorage.RemoveAt(listBoxMusic.SelectedIndex);
@@ -110,8 +111,6 @@ namespace Wlasny_Music_Player
             //kod na poprawna modyfikacje listy
             FileData.ChangeItemPosition(FileData.fileStorage, index, indexOfItemListLastClicked);
             UpdatePlayList();
-            //Console.WriteLine(FileData.fileStorage[index].GetFile());
-            //Console.WriteLine(FileData.fileStorage[indexOfItemListLastClicked].GetFile());
         }
 
         private void listBoxMusic_DragOver(object sender, DragEventArgs e)
@@ -122,27 +121,22 @@ namespace Wlasny_Music_Player
         private void listBoxMusic_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             UpdatePlayList(listBoxMusic.SelectedIndex);
-            //if (FileData.fileStorage.Count > 0)
-            //    axWindowsMediaPlayer1.URL = FileData.fileStorage[listBoxMusic.SelectedIndex].GetPath();
         }
 
         private void buttonClearList_Click(object sender, EventArgs e)
         {
-            var myPlayList = axWindowsMediaPlayer1.playlistCollection.newPlaylist("MyPlayList");
-            axWindowsMediaPlayer1.currentPlaylist = myPlayList;
-            listBoxMusic.Items.Clear();
+            while (FileData.fileStorage.Count != 0)
+            {
+                FileData.fileStorage.Clear();
+                listBoxMusic.Items.Clear();
+            }
+            UpdatePlayList();
         }
 
         private void buttonSaveList_Click(object sender, EventArgs e)
         {
-            SaveForm form = new SaveForm();
+            SaveForm form = new SaveForm(this);
             form.Show();
-
-        }
-
-        private void buttonLoadList_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

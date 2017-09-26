@@ -10,7 +10,7 @@ namespace Wlasny_Music_Player
     {
         public static List<FileData> fileStorage=new List<FileData>();
         string file, path;
-
+        
         public FileData(string file, string path)
         {
             this.file = file;
